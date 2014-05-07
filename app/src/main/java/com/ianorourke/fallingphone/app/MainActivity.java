@@ -18,8 +18,6 @@ public class MainActivity extends Activity implements AccelerometerReader.Accele
     boolean soundEnabled = false;
     boolean sensorEnabled = false;
 
-    //TODO: Service? - https://github.com/commonsguy/cw-android/tree/master/Notifications/FakePlayer
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -31,27 +29,6 @@ public class MainActivity extends Activity implements AccelerometerReader.Accele
         accelerometerReader.setInterface(this);
 
         mp = MediaPlayer.create(this, R.raw.scream2);
-    }
-
-
-    @Override
-    public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-
-        //getMenuInflater().inflate(R.menu.main, menu);
-        return true;
-    }
-
-    @Override
-    public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
-        int id = item.getItemId();
-        if (id == R.id.action_settings) {
-            return true;
-        }
-        return super.onOptionsItemSelected(item);
     }
 
     public float maxAcceleration = 0.0f;
@@ -97,15 +74,19 @@ public class MainActivity extends Activity implements AccelerometerReader.Accele
         this.soundEnabled = soundEnabled.isChecked();
     }
 
+    final int MIN_TRACK = 308;
+    final int MAX_TRACK = 524;
+    final float MAX_ACCEL = 6.0f;
+
     public void playSound(float accel) {
         if (!soundEnabled) return;
 
-        if (accel > 0.1f) {
+        if (accel > MAX_ACCEL) {
             if (!mp.isPlaying()) {
                 mp.start();
             } else {
-                if (mp.getCurrentPosition() >= 524) {
-                    mp.seekTo(308);
+                if (mp.getCurrentPosition() >= MAX_TRACK) {
+                    mp.seekTo(MIN_TRACK);
                 }
             }
         }
