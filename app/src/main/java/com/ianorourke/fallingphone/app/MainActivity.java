@@ -8,7 +8,6 @@ import android.view.View;
 import android.widget.CheckBox;
 import android.widget.TextView;
 
-
 public class MainActivity extends Activity implements AccelerometerReader.AccelerometerReaderInterface {
     static AccelerometerReader accelerometerReader;
     static MediaPlayer mp;
@@ -22,6 +21,7 @@ public class MainActivity extends Activity implements AccelerometerReader.Accele
         setContentView(R.layout.activity_main);
 
         setVolumeControlStream(AudioManager.STREAM_MUSIC);
+
 
         accelerometerReader = new AccelerometerReader(this);
         accelerometerReader.setInterface(this);
@@ -74,10 +74,12 @@ public class MainActivity extends Activity implements AccelerometerReader.Accele
 
     final int MIN_TRACK = 308;
     final int MAX_TRACK = 524;
-    final float MAX_ACCEL = 6.0f;
+    final float MAX_ACCEL = 14.0f;
 
     public void playSound(float accel) {
         if (!soundEnabled) return;
+
+        //TODO: Increase Volume with Greater Acceleration
 
         if (accel > MAX_ACCEL) {
             if (!mp.isPlaying()) {

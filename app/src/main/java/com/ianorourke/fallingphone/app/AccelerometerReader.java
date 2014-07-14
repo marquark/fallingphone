@@ -6,15 +6,12 @@ import android.hardware.SensorEvent;
 import android.hardware.SensorEventListener;
 import android.hardware.SensorManager;
 
-import android.util.Log;
-
 public class AccelerometerReader implements SensorEventListener {
     private float lastX, lastY, lastZ;
     private boolean hasSensor = false;
     private boolean initialized = false;
     private SensorManager sensorManager;
     private Sensor accelerometer;
-    private final float NOISE = 2.0f;
 
     public interface AccelerometerReaderInterface {
         public void receivedValues(float x, float y, float z);
@@ -24,12 +21,12 @@ public class AccelerometerReader implements SensorEventListener {
 
     public AccelerometerReader(Context c) {
         sensorManager = (SensorManager) c.getSystemService(Context.SENSOR_SERVICE);
-        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_LINEAR_ACCELERATION);
+        accelerometer = sensorManager.getDefaultSensor(Sensor.TYPE_ACCELEROMETER);
     }
 
     @Override
     public final void onAccuracyChanged(Sensor sensor, int accuracy) {
-        Log.v("accel", "Accuracy Changed: " + accuracy);
+        //Nothing
     }
 
     @Override
